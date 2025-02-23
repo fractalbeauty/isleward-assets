@@ -1,0 +1,35 @@
+.container {
+}
+
+.header {
+  margin: 0;
+  padding: 0;
+  font-weight: 700;
+}
+
+.imageBorder {
+  width: fit-content;
+  box-sizing: content-box;
+  border: 3px solid var(--black-a);
+}
+.imageContainer {
+  position: relative;
+  cursor: pointer;
+}
+.image {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.highlight {
+  position: absolute;
+  background: #ffffff11;
+}
+
+.button {
+  background-color: #3fa7dd;
+  color: #f2f5f5;
+  font-family: bitty;
+  line-height: 20px;
+  cursor: pointer;
+}

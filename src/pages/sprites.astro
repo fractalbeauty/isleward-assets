@@ -1,0 +1,54 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+
+const spritesheets = await getCollection("spritesheets");
+const sprites = spritesheets
+  .flatMap((sheet) =>
+    sheet.data.sprites.map((sprite) => ({
+      name: sprite.name,
+      size: sheet.data.size,
+      scale: sheet.data.size === 8 || sheet.data.size === 24 ? 4 : 1,
+    }))
+  )
+  .toSorted((a, b) => a.name.localeCompare(b.name));
+---
+
+<Layout>
+  <main>
+    <h1>All Sprites</h1>
+    <span class="subtle">
+      --------------------------------------------------
+    </span>
+
+    <div class="grid">
+      {
+        sprites.map((s) => (
+          <div class="sprite">
+            <a href={`/sprites/${s.name}.png`}>
+              <img src={`/sprites/${s.name}.png`} width={64} height={64} />
+            </a>
+          </div>
+        ))
+      }
+    </div>
+  </main>
+</Layout>
+
+<style>
+  main {
+    max-width: 1000px;
+    margin: 50px;
+  }
+
+  .grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .sprite {
+    padding: 3px;
+    border: 3px solid var(--black-a);
+  }
+</style>

@@ -1,0 +1,28 @@
+---
+import { getCollection } from "astro:content";
+import { Spritesheet } from "../../components/Spritesheet";
+import Layout from "../../layouts/Layout.astro";
+
+const spritesheets = await getCollection("spritesheets");
+---
+
+<Layout>
+  <main>
+    <h1>All Spritesheets</h1>
+    <span class="subtle">
+      --------------------------------------------------
+    </span>
+
+    {
+      spritesheets.map((s) => (
+        <Spritesheet client:load manifest={s.data} headerLink />
+      ))
+    }
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: 50px;
+  }
+</style>

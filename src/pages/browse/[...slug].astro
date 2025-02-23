@@ -1,0 +1,32 @@
+---
+import { getCollection } from "astro:content";
+import { Spritesheet } from "../../components/Spritesheet";
+import Layout from "../../layouts/Layout.astro";
+
+export async function getStaticPaths() {
+  const spritesheets = await getCollection("spritesheets");
+  return spritesheets.map((spritesheet) => ({
+    params: { slug: spritesheet.id },
+    props: { spritesheet },
+  }));
+}
+
+const { spritesheet } = Astro.props;
+---
+
+<Layout>
+  <main>
+    <h1>Details</h1>
+    <span class="subtle">
+      --------------------------------------------------
+    </span>
+
+    <Spritesheet client:load manifest={spritesheet.data} />
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: 50px;
+  }
+</style>

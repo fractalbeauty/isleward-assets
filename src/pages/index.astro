@@ -1,7 +1,124 @@
 ---
+import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
+import { manifest } from "../manifest";
+
+const spritesheets = await getCollection("spritesheets");
+const numSpritesheets = spritesheets.length;
+const numSprites = spritesheets
+  .map((s) => s.data.sprites.length)
+  .reduce((a, v) => a + v, 0);
 ---
 
 <Layout>
-  <h1>meow</h1>
+  <main>
+    <h1>Isleward Assets</h1>
+    <span class="subtle">
+      --------------------------------------------------
+    </span>
+
+    <ul>
+      <li>
+        Courtesy of <a href="https://meows.zip">meows.zip</a> and <a
+          href="https://islebuilds.com">Islebuilds</a
+        >
+      </li>
+      <li>
+        Hosting {numSpritesheets} spritesheets and {numSprites} sprites
+      </li>
+      <li>
+        Last generated {
+          new Date(manifest.generatedAt)
+            .toISOString()
+            .split(".")[0]
+            .replace("T", " ")
+        } UTC
+      </li>
+      <li>
+        Source code available on
+        <a href="https://github.com/hazelmeow/isleward-assets">GitHub</a>
+      </li>
+      <li>
+        Missing something? Please <a
+          href="https://github.com/hazelmeow/isleward-assets/issues/new"
+          >open an issue</a
+        >
+      </li>
+    </ul>
+
+    <br />
+
+    <h2>Browse</h2>
+    <span class="subtle">
+      --------------------------------------------------
+    </span>
+    <ul>
+      <li><a href="/browse">View all spritesheets</a></li>
+      <li><a href="/sprites">View all sprites</a></li>
+      <li><a href="/manifest.json">Raw index data</a></li>
+    </ul>
+
+    <br />
+
+    <h2>Index</h2>
+    <span class="subtle">
+      --------------------------------------------------
+    </span>
+
+    <ul>
+      {
+        spritesheets
+          .toSorted(
+            (a, b) =>
+              a.id.split("/").length - b.id.split("/").length ||
+              a.id.localeCompare(b.id)
+          )
+          .map((sheet) => (
+            <li>
+              <a href={`/browse/${sheet.id}`}>{sheet.id}</a>
+
+              <ul>
+                {sheet.data.sprites
+                  .toSorted((a, b) => a.name.localeCompare(b.name))
+                  .map((sprite) => (
+                    <li>
+                      <a href={`/sprites/${sprite.name}.png`}>{sprite.name}</a>
+                    </li>
+                  ))}
+              </ul>
+            </li>
+          ))
+      }
+    </ul>
+  </main>
 </Layout>
+
+<style>
+  main {
+    max-width: 1000px;
+    margin: 50px;
+  }
+  h1,
+  h2 {
+    margin: 0;
+    color: #ff6942;
+    font-size: inherit;
+    font-weight: 400;
+  }
+  h2 a {
+    color: #ff6942;
+  }
+
+  .subtle {
+    color: var(--black-a);
+  }
+
+  ul {
+    margin: 0;
+    list-style: "- ";
+    padding-left: 25px;
+  }
+  li::marker {
+    color: var(--black-a);
+  }
+</style>
