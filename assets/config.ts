@@ -429,6 +429,41 @@ export const SPRITESHEET_CONFIGS: SpritesheetConfig[] = [
     sprites: [sprite(0, 0, "Shady Dealer")],
   },
 
+  // iwd-blisterwind
+  {
+    id: "iwd-blisterwind/items",
+    url: BASE_URL + "/server/mods/iwd-blisterwind/images/items.png",
+    size: 64,
+    sprites: [sprite(2, 0, "Moontouched Horn"), sprite(3, 0, "Scarab Husk")],
+  },
+  {
+    id: "iwd-blisterwind/mobs",
+    url: BASE_URL + "/server/mods/iwd-blisterwind/images/mobs.png",
+    size: 8,
+    sprites: [sprite(3, 0, "Moontouched Oryx Calf"), sprite(4, 0, "Oryx Calf")],
+  },
+  {
+    id: "iwd-blisterwind/bigObjects",
+    url: BASE_URL + "/server/mods/iwd-blisterwind/images/bigObjects.png",
+    size: 24,
+    sprites: [
+      sprite(5, 3, "Moontouched Oryx Matriarch"),
+
+      sprite(4, 4, "Oryx Patriarch"),
+      sprite(5, 4, "Moontouched Oryx Patriarch"),
+
+      sprite(5, 5, "Oryx Matriarch"),
+    ],
+  },
+  sheetStubMod("iwd-blisterwind", "tiles", 8),
+  sheetStubMod("iwd-blisterwind", "tilesExtended", 8),
+  sheetStubMod("iwd-blisterwind", "walls", 8),
+  sheetStubMod("iwd-blisterwind", "wallsExtended", 8),
+  sheetStubMod("iwd-blisterwind", "doodadsExtended", 8),
+  sheetStubMod("iwd-blisterwind", "objects", 8),
+  sheetStubMod("iwd-blisterwind", "bigObjects", 8),
+  sheetStubMod("iwd-blisterwind", "bigObjectsExtended", 8),
+
   // iwd-cosmetics
   {
     id: "iwd-cosmetics/bigMobs",
@@ -478,6 +513,9 @@ export const SPRITESHEET_CONFIGS: SpritesheetConfig[] = [
     ],
   },
 
+  // iwd-fast-travel
+  sheetStubMod("iwd-fast-travel", "worldSprites", 8),
+
   // iwd-fjolgard
   {
     id: "iwd-fjolgard/mobs",
@@ -493,9 +531,40 @@ export const SPRITESHEET_CONFIGS: SpritesheetConfig[] = [
       // TODO
     ],
   },
+  sheetStubMod("iwd-fjolgard", "tiles", 8),
+  sheetStubMod("iwd-fjolgard", "walls", 8),
+  sheetStubMod("iwd-fjolgard", "objects", 8),
+  sheetStubMod("iwd-fjolgard", "doodads", 8),
+  sheetStubMod("iwd-fjolgard", "bigObjects", 24),
+
+  // iwd-gaekatla-temple
+  {
+    id: "iwd-gaekatla-temple/mobs",
+    url: BASE_URL + "/server/mods/iwd-gaekatla-temple/images/mobs.png",
+    size: 8,
+    sprites: [sprite(0, 0, "Vile Brood")],
+  },
+  {
+    id: "iwd-gaekatla-temple/items",
+    url: BASE_URL + "/server/mods/iwd-gaekatla-temple/images/items.png",
+    size: 64,
+    sprites: [
+      sprite(0, 0, "Temple of Gaekatla Cosmetic"),
+      sprite(1, 0, "Taunt"),
+      sprite(2, 0, "Barbed Chain"),
+      sprite(0, 1, "Virulent Cleaver"),
+      sprite(1, 1, "Tox-Steel Bulwark"),
+      sprite(2, 1, "Nyxaliss' Nock"),
+      sprite(3, 1, "Vile Essence"),
+      sprite(4, 1, "Serrated Fang"),
+      sprite(5, 1, "Noxious Egg"),
+    ],
+  },
+  sheetStubMod("iwd-gaekatla-temple", "attacks", 8),
+  sheetStubMod("iwd-gaekatla-temple", "gaekatlaBigObjects", 24),
 
   // iwd-mail
-  // TODO worldSprites
+  sheetStubMod("iwd-mail", "worldSprites", 8),
 
   // iwd-merrywinter
   {
@@ -561,6 +630,9 @@ export const SPRITESHEET_CONFIGS: SpritesheetConfig[] = [
     ],
   },
 
+  // iwd-misc-events
+  sheetStubMod("iwd-misc-events", "spawnAnimation", 8),
+
   // iwd-mounts
   {
     id: "iwd-mounts/mounts",
@@ -577,6 +649,9 @@ export const SPRITESHEET_CONFIGS: SpritesheetConfig[] = [
       sprite(1, 0, "Gray Donkey Reins"),
     ],
   },
+
+  // iwd-pets
+  sheetStubMod("iwd-pets", "pets", 8),
 
   // iwd-ranger
   {
@@ -623,6 +698,9 @@ export const SPRITESHEET_CONFIGS: SpritesheetConfig[] = [
       sprite(3, 3, "Candy Corn"),
     ],
   },
+  sheetStubMod("iwd-souls-moor", "skins", 8), // TODO
+  sheetStubMod("iwd-souls-moor", "pumpkinSkelly", 8),
+  sheetStubMod("iwd-souls-moor", "tiles", 8),
 
   // iwd-summer-fest
   {
@@ -669,6 +747,25 @@ export const SPRITESHEET_CONFIGS: SpritesheetConfig[] = [
       sprite(7, 2, "Golden Camel"),
     ],
   },
+  sheetStubMod("iwd-summer-fest", "tiles", 8),
+  sheetStubMod("iwd-summer-fest", "walls", 8),
+  sheetStubMod("iwd-summer-fest", "objects", 8),
+  sheetStubMod("iwd-summer-fest", "bigObjects", 8),
+
+  // iwd-trading
+  sheetStubMod("iwd-trading", "worldSprites", 8),
+  sheetStubMod("iwd-trading", "bigWorldSprites", 24),
+
+  // iwd-trials-of-the-abyss
+  {
+    id: "iwd-trials-of-the-abyss/items",
+    url: BASE_URL + "/server/mods/iwd-trials-of-the-abyss/images/items.png",
+    size: 64,
+    sprites: [sprite(0, 0, "Abyssal Lodestone")],
+  },
+  sheetStubMod("iwd-trials-of-the-abyss", "bigObjects", 24),
+  sheetStubMod("iwd-trials-of-the-abyss", "walls", 8),
+  sheetStubMod("iwd-trials-of-the-abyss", "tilesExtended", 24),
 
   // iwd-valentines
   {
@@ -700,64 +797,5 @@ export const SPRITESHEET_CONFIGS: SpritesheetConfig[] = [
     url: BASE_URL + "/server/mods/iwd-valentines/images/bigMobs.png",
     size: 24,
     sprites: [sprite(0, 0, "Sjofnian Deadeye")],
-  },
-
-  // iwd-gaekatla-temple
-  {
-    id: "iwd-gaekatla-temple/mobs",
-    url: BASE_URL + "/server/mods/iwd-gaekatla-temple/images/mobs.png",
-    size: 8,
-    sprites: [sprite(0, 0, "Vile Brood")],
-  },
-  {
-    id: "iwd-gaekatla-temple/items",
-    url: BASE_URL + "/server/mods/iwd-gaekatla-temple/images/items.png",
-    size: 64,
-    sprites: [
-      sprite(0, 0, "Temple of Gaekatla Cosmetic"),
-      sprite(1, 0, "Taunt"),
-      sprite(2, 0, "Barbed Chain"),
-      sprite(0, 1, "Virulent Cleaver"),
-      sprite(1, 1, "Tox-Steel Bulwark"),
-      sprite(2, 1, "Nyxaliss' Nock"),
-      sprite(3, 1, "Vile Essence"),
-      sprite(4, 1, "Serrated Fang"),
-      sprite(5, 1, "Noxious Egg"),
-    ],
-  },
-
-  // iwd-trials-of-the-abyss
-  {
-    id: "iwd-trials-of-the-abyss/items",
-    url: BASE_URL + "/server/mods/iwd-trials-of-the-abyss/images/items.png",
-    size: 64,
-    sprites: [sprite(0, 0, "Abyssal Lodestone")],
-  },
-
-  // iwd-blisterwind
-  {
-    id: "iwd-blisterwind/items",
-    url: BASE_URL + "/server/mods/iwd-blisterwind/images/items.png",
-    size: 64,
-    sprites: [sprite(2, 0, "Moontouched Horn"), sprite(3, 0, "Scarab Husk")],
-  },
-  {
-    id: "iwd-blisterwind/mobs",
-    url: BASE_URL + "/server/mods/iwd-blisterwind/images/mobs.png",
-    size: 8,
-    sprites: [sprite(3, 0, "Moontouched Oryx Calf"), sprite(4, 0, "Oryx Calf")],
-  },
-  {
-    id: "iwd-blisterwind/bigObjects",
-    url: BASE_URL + "/server/mods/iwd-blisterwind/images/bigObjects.png",
-    size: 24,
-    sprites: [
-      sprite(5, 3, "Moontouched Oryx Matriarch"),
-
-      sprite(4, 4, "Oryx Patriarch"),
-      sprite(5, 4, "Moontouched Oryx Patriarch"),
-
-      sprite(5, 5, "Oryx Matriarch"),
-    ],
   },
 ];
