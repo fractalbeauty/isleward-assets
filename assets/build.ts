@@ -41,7 +41,14 @@ const downloadSpritesheet = async (config: SpritesheetConfig) => {
 
   await fs.mkdir(getSpritesheetDirectory(config), { recursive: true });
 
-  const bytes = await fetch(config.url).then((r) => r.arrayBuffer());
+  const res = await fetch(config.url);
+  if (res.status !== 200) {
+    error(
+      `Download failed for "${config.id}" (${config.url}), status not ok: ${res.status}`
+    );
+    throw new Error(`Download failed`);
+  }
+  const bytes = await res.arrayBuffer();
   await fs.writeFile(getSpritesheetPath(config), new Uint8Array(bytes));
 };
 
