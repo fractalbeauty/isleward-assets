@@ -2,6 +2,23 @@ import type { SpriteConfig, SpritesheetConfig } from "./schema";
 
 const BASE_URL = "https://play.isleward.com";
 
+const sheetStubCore = (name: string, size: number): SpritesheetConfig => ({
+  id: name,
+  url: BASE_URL + `/images/${name}.png`,
+  size,
+  sprites: [],
+});
+const sheetStubMod = (
+  mod: string,
+  name: string,
+  size: number
+): SpritesheetConfig => ({
+  id: `${mod}/${name}`,
+  url: BASE_URL + `/server/mods/${mod}/images/${name}.png`,
+  size,
+  sprites: [],
+});
+
 const sprite = (x: number, y: number, name: string): SpriteConfig => ({
   name,
   x,
@@ -54,6 +71,21 @@ export const SPRITESHEET_CONFIGS: SpritesheetConfig[] = [
     ],
   },
 
+  sheetStubCore("animBigObjects", 24),
+  sheetStubCore("animBoss", 24),
+  sheetStubCore("animChar", 8),
+  sheetStubCore("animMob", 8),
+  sheetStubCore("attacks", 8),
+  sheetStubCore("auras", 24),
+  sheetStubCore("bigObjects", 24),
+
+  {
+    id: "bosses",
+    url: BASE_URL + "/images/bosses.png",
+    size: 24,
+    sprites: [sprite(1, 0, "Nyxaliss"), sprite(2, 0, "M'ogresh")],
+  },
+
   {
     id: "characters",
     url: BASE_URL + "/images/characters.png",
@@ -75,6 +107,8 @@ export const SPRITESHEET_CONFIGS: SpritesheetConfig[] = [
       sprite(0, 9, "Carp on a Stick"),
     ],
   },
+
+  sheetStubCore("icon", 192),
 
   {
     id: "items",
@@ -222,13 +256,6 @@ export const SPRITESHEET_CONFIGS: SpritesheetConfig[] = [
   },
 
   {
-    id: "bosses",
-    url: BASE_URL + "/images/bosses.png",
-    size: 24,
-    sprites: [sprite(1, 0, "Nyxaliss"), sprite(2, 0, "M'ogresh")],
-  },
-
-  {
     id: "mobs",
     url: BASE_URL + "/images/mobs.png",
     size: 8,
@@ -346,8 +373,8 @@ export const SPRITESHEET_CONFIGS: SpritesheetConfig[] = [
     ],
   },
 
-  // TODO: BASE_URL + '/images/objects.png'
-  // TODO: BASE_URL + '/images/portraitIcons.png'
+  sheetStubCore("objects", 8),
+  sheetStubCore("portraitIcons", 64), // TODO
 
   {
     id: "questItems",
@@ -365,12 +392,16 @@ export const SPRITESHEET_CONFIGS: SpritesheetConfig[] = [
     ],
   },
 
-  // TODO: BASE_URL + '/images/tiles.png'
-  // TODO: BASE_URL + '/images/uiIcons.png'
-
-  // TODO: BASE_URL + '/images/walls.png'
+  sheetStubCore("statusEffects", 8),
+  sheetStubCore("statusIcons", 8),
+  sheetStubCore("tiles", 8),
+  sheetStubCore("ui", 8),
+  sheetStubCore("uiIcons", 64),
+  sheetStubCore("walls", 8),
 
   // class-necromancer
+  sheetStubMod("class-necromancer", "abilityIcons", 64), // TODO
+  sheetStubMod("class-necromancer", "avatar", 64),
   {
     id: "class-necromancer/items",
     url: BASE_URL + "/server/mods/class-necromancer/images/items.png",
@@ -382,7 +413,7 @@ export const SPRITESHEET_CONFIGS: SpritesheetConfig[] = [
       sprite(3, 0, "Bone Sickle"),
     ],
   },
-  // TODO: BASE_URL + '/server/mods/class-necromancer/images/mobs.png'
+  sheetStubMod("class-necromancer", "mobs", 8),
 
   // feature-cards
   {
