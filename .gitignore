@@ -26,3 +26,4 @@ pnpm-debug.log*
 # generated
 public/assets
 public/sprites
+public/manifest.json

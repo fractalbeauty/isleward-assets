@@ -17,6 +17,7 @@ export type SpritesheetConfig = z.infer<typeof spritesheetConfigSchema>;
 export const spritesheetManifestSchema = spritesheetConfigSchema.extend({
   width: z.number(),
   height: z.number(),
+  assetPath: z.string(),
 });
 export type SpritesheetManifest = z.infer<typeof spritesheetManifestSchema>;
 
@@ -24,3 +25,4 @@ export const manifestSchema = z.object({
   generatedAt: z.number(),
   spritesheets: z.array(spritesheetManifestSchema),
 });
+export type Manifest = z.infer<typeof manifestSchema>;

@@ -1,9 +1,12 @@
-import fs from "fs/promises";
-import { SPRITESHEET_CONFIGS } from "./config";
-import { Jimp } from "jimp";
 import chalk from "chalk";
-import type { SpritesheetConfig } from "./schema";
-import path from "path";
+import fs from "fs/promises";
+import { Jimp } from "jimp";
+import { SPRITESHEET_CONFIGS } from "./config";
+import type {
+  Manifest,
+  SpritesheetConfig,
+  SpritesheetManifest,
+} from "./schema";
 
 const info = (...args: unknown[]) => {
   console.log(chalk.cyan(...args));
@@ -19,13 +22,17 @@ const getSpritesheetDirectory = (config: SpritesheetConfig) =>
   `./public/assets/${config.id}`;
 
 const getSpritesheetPath = (config: SpritesheetConfig) =>
-  `./public/assets/${config.id}/${path.basename(config.id)}.png`;
+  `./public/assets/${config.id}/${config.id.replaceAll("/", "_")}.png`;
 
 const getSpritesheetPartPath = (
   config: SpritesheetConfig,
   x: number,
   y: number
-) => `./public/assets/${config.id}/${path.basename(config.id)}_${x}_${y}.png`;
+) =>
+  `./public/assets/${config.id}/${config.id.replaceAll(
+    "/",
+    "_"
+  )}_${x}_${y}.png`;
 
 const getSpritePath = (name: string) => `./public/sprites/${name}.png`;
 
@@ -101,6 +108,38 @@ const copySprites = async (config: SpritesheetConfig) => {
   );
 };
 
+const makeManifest = async (configs: SpritesheetConfig[]) => {
+  info("Generating manifest...");
+
+  const spritesheets: SpritesheetManifest[] = [];
+
+  for (const config of configs) {
+    const assetPath = getSpritesheetPath(config).replace("./public", "");
+
+    // TODO: could be more efficient since we already do this,
+    // but it was a pain to organize well
+    const image = await Jimp.read(getSpritesheetPath(config));
+
+    spritesheets.push({
+      ...config,
+      width: image.width,
+      height: image.height,
+      assetPath,
+    });
+  }
+
+  const manifest: Manifest = {
+    generatedAt: new Date().getTime(),
+    spritesheets,
+  };
+
+  await fs.writeFile(
+    "./public/manifest.json",
+    JSON.stringify(manifest, null, 4),
+    { encoding: "utf-8" }
+  );
+};
+
 const run = async () => {
   info("Generating assets...");
 
@@ -116,6 +155,7 @@ const run = async () => {
   for (const config of SPRITESHEET_CONFIGS) {
     await copySprites(config);
   }
+  await makeManifest(SPRITESHEET_CONFIGS);
 
   info("Finished generating assets!");
 };
