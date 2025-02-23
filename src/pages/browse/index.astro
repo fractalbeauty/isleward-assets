@@ -14,9 +14,13 @@ const spritesheets = await getCollection("spritesheets");
     </span>
 
     {
-      spritesheets.map((s) => (
-        <Spritesheet client:load manifest={s.data} headerLink />
-      ))
+      spritesheets
+        .toSorted(
+          (a, b) =>
+            a.id.split("/").length - b.id.split("/").length ||
+            a.id.localeCompare(b.id)
+        )
+        .map((s) => <Spritesheet client:load manifest={s.data} headerLink />)
     }
   </main>
 </Layout>
