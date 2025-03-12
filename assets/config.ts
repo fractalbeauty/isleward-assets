@@ -439,6 +439,20 @@ export const SPRITESHEET_CONFIGS: SpritesheetConfig[] = [
       sprite(3, 0, "Scarab Husk"),
       sprite(4, 0, "Bonecaller's Crown"),
       sprite(5, 0, "Morbid Marrow"),
+
+      sprite(0, 1, "Sand-Shrouded Helm"),
+      sprite(1, 1, "Sand-Shrouded Necklace"),
+      sprite(2, 1, "Sand-Shrouded Chest Armor"),
+      sprite(3, 1, "Sand-Shrouded Gloves"),
+      sprite(4, 1, "Sand-Shrouded Ring"),
+      sprite(5, 1, "Sand-Shrouded Belt"),
+      sprite(6, 1, "Sand-Shrouded Pants"),
+      sprite(7, 1, "Sand-Shrouded Boots"),
+
+      sprite(0, 2, "Sand-Shrouded Off-Hand Item"),
+      sprite(2, 2, "Sand-Shrouded Two-Handed Weapon"),
+      sprite(3, 2, "Sand-Shrouded One-Handed Weapon"),
+      sprite(4, 2, "Sand-Shrouded Trinket"),
     ],
   },
   {
