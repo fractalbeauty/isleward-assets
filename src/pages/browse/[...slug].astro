@@ -22,11 +22,56 @@ const { spritesheet } = Astro.props;
     </span>
 
     <Spritesheet client:load manifest={spritesheet.data} />
+
+    <h2>Sprites</h2>
+    <span class="subtle">
+      --------------------------------------------------
+    </span>
+    <div class="sprites">
+      {
+        spritesheet.data.sprites.map((s) => (
+          <div class="sprite">
+            <div class="sprite-image">
+              <a href={`/sprites/${s.name}.png`}>
+                <img src={`/sprites/${s.name}.png`} width={64} height={64} />
+              </a>
+            </div>
+
+            {s.name}
+
+            <span class="subtle">
+              [{s.x}, {s.y}]
+            </span>
+          </div>
+        ))
+      }
+    </div>
   </main>
 </Layout>
 
 <style>
   main {
     margin: 50px;
+  }
+
+  h2 {
+    margin-top: 20px;
+  }
+  .sprites {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .sprite {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+  .sprite-image {
+    padding: 3px;
+    border: 3px solid var(--black-a);
+    width: 64px;
+    height: 64px;
   }
 </style>
