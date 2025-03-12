@@ -434,7 +434,12 @@ export const SPRITESHEET_CONFIGS: SpritesheetConfig[] = [
     id: "iwd-blisterwind/items",
     url: BASE_URL + "/server/mods/iwd-blisterwind/images/items.png",
     size: 64,
-    sprites: [sprite(2, 0, "Moontouched Horn"), sprite(3, 0, "Scarab Husk")],
+    sprites: [
+      sprite(2, 0, "Moontouched Horn"),
+      sprite(3, 0, "Scarab Husk"),
+      sprite(4, 0, "Bonecaller's Crown"),
+      sprite(5, 0, "Morbid Marrow"),
+    ],
   },
   {
     id: "iwd-blisterwind/mobs",
