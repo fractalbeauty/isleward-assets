@@ -250,6 +250,8 @@ export const SPRITESHEET_CONFIGS: SpritesheetConfig[] = [
 
       sprite(0, 9, "Empty Vial"),
 
+      sprite(11, 0, "Brackish Pike"),
+      sprite(11, 1, "Mudfish"),
       sprite(11, 2, "Sun Carp"),
       sprite(11, 4, "Ancient Sun Carp"),
     ],
@@ -453,6 +455,7 @@ export const SPRITESHEET_CONFIGS: SpritesheetConfig[] = [
       sprite(2, 2, "Sand-Shrouded Two-Handed Weapon"),
       sprite(3, 2, "Sand-Shrouded One-Handed Weapon"),
       sprite(4, 2, "Sand-Shrouded Trinket"),
+      sprite(5, 2, "Relic of Sathanix"),
     ],
   },
   {
@@ -693,7 +696,7 @@ export const SPRITESHEET_CONFIGS: SpritesheetConfig[] = [
     id: "iwd-ranger/abilityIcons",
     url: BASE_URL + "/server/mods/iwd-ranger/images/abilityIcons.png",
     size: 64,
-    sprites: [sprite(0, 0, "Roll")],
+    sprites: [sprite(0, 0, "Roll"), sprite(1, 0, "Leech Life")],
   },
 
   // iwd-souls-moor
