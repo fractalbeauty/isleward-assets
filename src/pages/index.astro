@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import { changelog } from "../changelog";
 import Layout from "../layouts/Layout.astro";
 import { manifest } from "../manifest";
 
@@ -44,6 +45,33 @@ const numSprites = spritesheets
           >open an issue</a
         >
       </li>
+    </ul>
+
+    <br />
+
+    <h2>Recent Changes</h2>
+    <span class="subtle">
+      --------------------------------------------------
+    </span>
+
+    <ul>
+      {
+        changelog.slice(0, 5).map((entry) => {
+          let verb;
+          if (entry.from) {
+            verb = "Updated";
+          } else {
+            verb = "Added";
+          }
+          return (
+            <li>
+              {new Date(entry.at).toISOString().split("T")[0]}: {verb}{" "}
+              {entry.id}
+            </li>
+          );
+        })
+      }
+      <li><a href="/changelog">View full changelog</a></li>
     </ul>
 
     <br />
