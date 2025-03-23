@@ -331,6 +331,7 @@ const run = async (args: string[]): Promise<boolean> => {
 
   // write lockfile
   info("Writing lockfile...");
+  await fs.mkdir("./state", { recursive: true });
   const updatedLockfile: Lockfile = {
     spritesheets: SPRITESHEET_CONFIGS.map((spritesheet) => {
       const configHash = configHashes.get(spritesheet.id);
