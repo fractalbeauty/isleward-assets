@@ -116,7 +116,7 @@ export const Spritesheet: FunctionComponent<SpritesheetProps> = ({
         >
           <img
             className={styles.image}
-            src={manifest.assetPath}
+            src={manifest.assetPath + "?v=" + manifest.fileHash}
             width={width * scale}
             height={height * scale}
           ></img>

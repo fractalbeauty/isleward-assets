@@ -9,6 +9,7 @@ const sprites = spritesheets
       name: sprite.name,
       size: sheet.data.size,
       scale: sheet.data.size === 8 || sheet.data.size === 24 ? 4 : 1,
+      sheetHash: sheet.data.fileHash,
     }))
   )
   .toSorted((a, b) => a.name.localeCompare(b.name));
@@ -26,7 +27,11 @@ const sprites = spritesheets
         sprites.map((s) => (
           <div class="sprite">
             <a href={`/sprites/${s.name}.png`}>
-              <img src={`/sprites/${s.name}.png`} width={64} height={64} />
+              <img
+                src={`/sprites/${s.name}.png?v=${s.sheetHash}`}
+                width={64}
+                height={64}
+              />
             </a>
           </div>
         ))
