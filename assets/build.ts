@@ -7,8 +7,11 @@ import { exit } from "process";
 import { parseArgs } from "util";
 import { SPRITESHEET_CONFIGS } from "./config";
 import {
+  changelogSchema,
   DEFAULT_LOCKFILE,
   lockfileSchema,
+  type Changelog,
+  type ChangelogEntry,
   type Lockfile,
   type Manifest,
   type SpritesheetConfig,
@@ -183,7 +186,7 @@ const run = async (args: string[]): Promise<boolean> => {
   }
 
   // read lockfile
-  let lockfile;
+  let lockfile: Lockfile;
   if (lockfileExists) {
     // try to read contents
     let lockfileContents;
@@ -205,6 +208,40 @@ const run = async (args: string[]): Promise<boolean> => {
     }
   } else {
     lockfile = DEFAULT_LOCKFILE;
+  }
+
+  // check if changelog exists
+  let changelogExists = false;
+  try {
+    await fs.access("./state/changelog.json");
+    changelogExists = true;
+  } catch (e) {
+    warn("Failed to access changelog, creating it.");
+  }
+
+  // read changelog
+  let changelog: Changelog;
+  if (changelogExists) {
+    // try to read contents
+    let changelogContents;
+    try {
+      changelogContents = await fs.readFile("./state/changelog.json", {
+        encoding: "utf-8",
+      });
+    } catch (e) {
+      error("Failed to read existing changelog.");
+      return false;
+    }
+
+    // try to parse contents
+    try {
+      changelog = changelogSchema.parse(JSON.parse(changelogContents));
+    } catch (e) {
+      error("Failed to parse changelog: ", e);
+      return false;
+    }
+  } else {
+    changelog = [];
   }
 
   // hash configs
@@ -310,6 +347,22 @@ const run = async (args: string[]): Promise<boolean> => {
         fileHashSince = prevLock.fileHashSince;
       }
 
+      // if spritesheet was added or hash changed
+      if (!prevLock || fileHash !== prevLock.fileHash) {
+        const changelogEntry: ChangelogEntry = {
+          id: spritesheet.id,
+          from: prevLock?.fileHash ?? null,
+          to: fileHash,
+          at: new Date().getTime(),
+        };
+        info(
+          `Spritesheet changed: ${changelogEntry.id}, ${
+            changelogEntry.from ?? "(none)"
+          } -> ${changelogEntry.to}`
+        );
+        changelog.push(changelogEntry);
+      }
+
       return {
         id: spritesheet.id,
         configHash,
@@ -328,6 +381,15 @@ const run = async (args: string[]): Promise<boolean> => {
   await fs.writeFile("./state/lockfile.json", prettyCanonicalUpdatedLockfile, {
     encoding: "utf-8",
   });
+
+  // write changelog
+  await fs.writeFile(
+    "./state/changelog.json",
+    JSON.stringify(changelog, null, 4),
+    {
+      encoding: "utf-8",
+    }
+  );
 
   info("Finished!");
 

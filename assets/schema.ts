@@ -49,3 +49,16 @@ export type Lockfile = z.infer<typeof lockfileSchema>;
 export const DEFAULT_LOCKFILE: Lockfile = {
   spritesheets: [],
 };
+
+// changelog
+
+export const changelogEntrySchema = z.object({
+  id: z.string(),
+  from: z.string().nullable(),
+  to: z.string(),
+  at: z.number(),
+});
+export type ChangelogEntry = z.infer<typeof changelogEntrySchema>;
+
+export const changelogSchema = z.array(changelogEntrySchema);
+export type Changelog = z.infer<typeof changelogSchema>;
