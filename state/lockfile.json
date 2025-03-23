@@ -1,0 +1,520 @@
+{
+    "spritesheets": [
+        {
+            "configHash": "19e8f5f7cce7a89",
+            "fileHash": "5218319ccc495f4e",
+            "fileHashSince": 1742698952656,
+            "id": "abilityIcons"
+        },
+        {
+            "configHash": "2aa8a9dc597e2d0c",
+            "fileHash": "eda7190dd9f47b4f",
+            "fileHashSince": 1742698952656,
+            "id": "animBigObjects"
+        },
+        {
+            "configHash": "2e45bfc5f1a5506c",
+            "fileHash": "84dec26eef84ad24",
+            "fileHashSince": 1742698952656,
+            "id": "animBoss"
+        },
+        {
+            "configHash": "e2f79f2d6a23ad50",
+            "fileHash": "99fe9a3dedf0314b",
+            "fileHashSince": 1742698952656,
+            "id": "animChar"
+        },
+        {
+            "configHash": "550f3349710a1295",
+            "fileHash": "b14c3d00ed6dc5b7",
+            "fileHashSince": 1742698952656,
+            "id": "animMob"
+        },
+        {
+            "configHash": "dd4fcc87719db61a",
+            "fileHash": "cc4705028bac01ce",
+            "fileHashSince": 1742698952656,
+            "id": "attacks"
+        },
+        {
+            "configHash": "393783e8b9ee81c5",
+            "fileHash": "fb61f1f171fa2b87",
+            "fileHashSince": 1742698952656,
+            "id": "auras"
+        },
+        {
+            "configHash": "f48ce7d5fa1ae716",
+            "fileHash": "9490d15a797e70f9",
+            "fileHashSince": 1742698952656,
+            "id": "bigObjects"
+        },
+        {
+            "configHash": "6ea92c296dc02ce7",
+            "fileHash": "5f88630d22227d71",
+            "fileHashSince": 1742698952656,
+            "id": "bosses"
+        },
+        {
+            "configHash": "a3ab49608de59a45",
+            "fileHash": "2a54734f5ec3f134",
+            "fileHashSince": 1742698952656,
+            "id": "characters"
+        },
+        {
+            "configHash": "b84bc8423c4b9a9c",
+            "fileHash": "3c7ccb328c3f2f1e",
+            "fileHashSince": 1742698952656,
+            "id": "consumables"
+        },
+        {
+            "configHash": "4d5c886b41a7b254",
+            "fileHash": "c107f89e1b73faaf",
+            "fileHashSince": 1742698952656,
+            "id": "icon"
+        },
+        {
+            "configHash": "d740fe70dab7af26",
+            "fileHash": "365ce300edae0243",
+            "fileHashSince": 1742698952656,
+            "id": "items"
+        },
+        {
+            "configHash": "c3612e7d6cbf7b44",
+            "fileHash": "42e87309dfaa6887",
+            "fileHashSince": 1742698952656,
+            "id": "legendaryItems"
+        },
+        {
+            "configHash": "f1bc3a1b16ccd0ac",
+            "fileHash": "2024cd6ff7c52d6d",
+            "fileHashSince": 1742698952656,
+            "id": "materials"
+        },
+        {
+            "configHash": "fa7f516cba61870e",
+            "fileHash": "249f60aaf17a289c",
+            "fileHashSince": 1742698952656,
+            "id": "mobs"
+        },
+        {
+            "configHash": "76c236c0b14d0910",
+            "fileHash": "2c9fd4f583cdecef",
+            "fileHashSince": 1742698952656,
+            "id": "objects"
+        },
+        {
+            "configHash": "87a08fb60a460655",
+            "fileHash": "f84c585df69e5dfe",
+            "fileHashSince": 1742698952656,
+            "id": "portraitIcons"
+        },
+        {
+            "configHash": "b19b5c9d1974814b",
+            "fileHash": "52c6a67c47b08be3",
+            "fileHashSince": 1742698952656,
+            "id": "questItems"
+        },
+        {
+            "configHash": "8045516e10214a16",
+            "fileHash": "dddb7fbfa1bf06dc",
+            "fileHashSince": 1742698952656,
+            "id": "statusEffects"
+        },
+        {
+            "configHash": "faf51de7afc3a1d2",
+            "fileHash": "70a9214d831a0336",
+            "fileHashSince": 1742698952656,
+            "id": "statusIcons"
+        },
+        {
+            "configHash": "42b0d241e13faf42",
+            "fileHash": "88419af6183e10c6",
+            "fileHashSince": 1742698952656,
+            "id": "tiles"
+        },
+        {
+            "configHash": "44e4e5499684a5cb",
+            "fileHash": "cfb4c910485705a2",
+            "fileHashSince": 1742698952656,
+            "id": "ui"
+        },
+        {
+            "configHash": "1b05ced328b48440",
+            "fileHash": "4e60cd2b04b3a155",
+            "fileHashSince": 1742698952657,
+            "id": "uiIcons"
+        },
+        {
+            "configHash": "4feea667572e8ea4",
+            "fileHash": "b675f673fe946430",
+            "fileHashSince": 1742698952657,
+            "id": "walls"
+        },
+        {
+            "configHash": "27b69617e51646b5",
+            "fileHash": "fae365f13d867588",
+            "fileHashSince": 1742698952657,
+            "id": "class-necromancer/abilityIcons"
+        },
+        {
+            "configHash": "93c9188577974347",
+            "fileHash": "e16f6649352fd3dc",
+            "fileHashSince": 1742698952657,
+            "id": "class-necromancer/avatar"
+        },
+        {
+            "configHash": "6261ea0e4cdccd4f",
+            "fileHash": "194c70d2d16ebeca",
+            "fileHashSince": 1742698952657,
+            "id": "class-necromancer/items"
+        },
+        {
+            "configHash": "690daa1f91c1609e",
+            "fileHash": "d50435af6a1eff88",
+            "fileHashSince": 1742698952657,
+            "id": "class-necromancer/mobs"
+        },
+        {
+            "configHash": "d4e80b515b0b5732",
+            "fileHash": "88dd6fe5eef630f0",
+            "fileHashSince": 1742698952657,
+            "id": "feature-cards/items"
+        },
+        {
+            "configHash": "5111ba0012f0b36e",
+            "fileHash": "67d69481f6813d18",
+            "fileHashSince": 1742698952657,
+            "id": "feature-cards/mobs"
+        },
+        {
+            "configHash": "60f497b20d52275",
+            "fileHash": "a6328c9ed44391f3",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-blisterwind/items"
+        },
+        {
+            "configHash": "edd44279c5d43856",
+            "fileHash": "915d3dfd8cd8e034",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-blisterwind/mobs"
+        },
+        {
+            "configHash": "ec22132c625290dd",
+            "fileHash": "f4adf38dd7562690",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-blisterwind/bigObjects"
+        },
+        {
+            "configHash": "3f95a7acf3c12fda",
+            "fileHash": "19beb0013744e953",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-blisterwind/tiles"
+        },
+        {
+            "configHash": "15a0739826d6abbf",
+            "fileHash": "43f95a1e228e1e64",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-blisterwind/tilesExtended"
+        },
+        {
+            "configHash": "46c9e15e9cb0e3e6",
+            "fileHash": "38795ca3944e70f6",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-blisterwind/walls"
+        },
+        {
+            "configHash": "ff5541e267e6ec",
+            "fileHash": "cb6b4b09f44c61d9",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-blisterwind/wallsExtended"
+        },
+        {
+            "configHash": "36d23df4a5efadab",
+            "fileHash": "609584fce8be5f46",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-blisterwind/doodadsExtended"
+        },
+        {
+            "configHash": "f7282c91e357aa32",
+            "fileHash": "d3ed4f863c6b69df",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-blisterwind/objects"
+        },
+        {
+            "configHash": "ec22132c625290dd",
+            "fileHash": "f4adf38dd7562690",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-blisterwind/bigObjects"
+        },
+        {
+            "configHash": "3b6c604caf4cb1ad",
+            "fileHash": "d3295b46768029fb",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-blisterwind/bigObjectsExtended"
+        },
+        {
+            "configHash": "b9887b34418a7ee4",
+            "fileHash": "553788818f824cfb",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-cosmetics/bigMobs"
+        },
+        {
+            "configHash": "a9d34d9832988024",
+            "fileHash": "7edde9034bdf8084",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-cosmetics/skins"
+        },
+        {
+            "configHash": "be490777ca73fd",
+            "fileHash": "acdbbedef4d07830",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-fast-travel/worldSprites"
+        },
+        {
+            "configHash": "9f282814c9530304",
+            "fileHash": "c7cf08d3a7558cdf",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-fjolgard/mobs"
+        },
+        {
+            "configHash": "1447b3a2bf096064",
+            "fileHash": "1b99af4d36443b05",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-fjolgard/tiles"
+        },
+        {
+            "configHash": "2d77ad08cc8f24c8",
+            "fileHash": "42aa4eae5c20fc00",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-fjolgard/walls"
+        },
+        {
+            "configHash": "c9360e001e9ecb76",
+            "fileHash": "563c0c0944d06b02",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-fjolgard/objects"
+        },
+        {
+            "configHash": "84399156364f04bb",
+            "fileHash": "e6cd26a884ffd478",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-fjolgard/doodads"
+        },
+        {
+            "configHash": "c9334befc13adb99",
+            "fileHash": "3cba3e17a7bd1924",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-fjolgard/bigObjects"
+        },
+        {
+            "configHash": "fad5e981f263075d",
+            "fileHash": "8b61c55bc0c71bd0",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-gaekatla-temple/mobs"
+        },
+        {
+            "configHash": "a21a5f34091dfe33",
+            "fileHash": "3fb52154391d1673",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-gaekatla-temple/items"
+        },
+        {
+            "configHash": "a951a65d15a81b6a",
+            "fileHash": "ed91e429252a6753",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-gaekatla-temple/attacks"
+        },
+        {
+            "configHash": "5e2c168854bb272b",
+            "fileHash": "bbb7303542b035e7",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-gaekatla-temple/gaekatlaBigObjects"
+        },
+        {
+            "configHash": "fc1cb94c7d6944ef",
+            "fileHash": "bec36f4d9a309562",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-mail/worldSprites"
+        },
+        {
+            "configHash": "3a791f2cca9bf98d",
+            "fileHash": "8020f1fa430f5929",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-merrywinter/bigMobs"
+        },
+        {
+            "configHash": "bd0af8c2d9b63e30",
+            "fileHash": "f106224539000c03",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-merrywinter/items"
+        },
+        {
+            "configHash": "8ba7cf884899d54d",
+            "fileHash": "51953f8b4232913a",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-merrywinter/mobs"
+        },
+        {
+            "configHash": "361e324708331c97",
+            "fileHash": "cb3fdd416e384512",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-merrywinter/skins"
+        },
+        {
+            "configHash": "17aea794b95190d4",
+            "fileHash": "32f3ecde84aa65c5",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-misc-events/spawnAnimation"
+        },
+        {
+            "configHash": "d7d73286daffae15",
+            "fileHash": "ee910a98df827a99",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-mounts/mounts"
+        },
+        {
+            "configHash": "46a9136934728f17",
+            "fileHash": "aa415a8223aae1c",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-mounts/reins"
+        },
+        {
+            "configHash": "dab2cdf1287201eb",
+            "fileHash": "91a0308732c75dc2",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-pets/pets"
+        },
+        {
+            "configHash": "9c00f36c0d89eb5b",
+            "fileHash": "c0282bbf4f263f06",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-ranger/items"
+        },
+        {
+            "configHash": "68a124f7ff6927d6",
+            "fileHash": "e9ad05fc96271066",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-ranger/mobs"
+        },
+        {
+            "configHash": "7c1ba97fdeaadbc3",
+            "fileHash": "b30a27cbbc7dd40e",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-ranger/abilityIcons"
+        },
+        {
+            "configHash": "5eb8fe6dbfebf304",
+            "fileHash": "427401342e90864c",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-souls-moor/items"
+        },
+        {
+            "configHash": "82283aa67fea984b",
+            "fileHash": "5fec35c2eeb5a71b",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-souls-moor/skins"
+        },
+        {
+            "configHash": "f9378e10ae51ec02",
+            "fileHash": "f63dd2911a4f1f21",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-souls-moor/pumpkinSkelly"
+        },
+        {
+            "configHash": "10d1e6f901b338a",
+            "fileHash": "a73a92d46154ebfc",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-souls-moor/tiles"
+        },
+        {
+            "configHash": "9af7318e306aed31",
+            "fileHash": "9a3520dd817baaa9",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-summer-fest/items"
+        },
+        {
+            "configHash": "f0e49304d44a1761",
+            "fileHash": "65bcce713e3ecabe",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-summer-fest/mobs"
+        },
+        {
+            "configHash": "59b08993b11fa1e7",
+            "fileHash": "141f91d5041722d8",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-summer-fest/tiles"
+        },
+        {
+            "configHash": "cc55f38f3377ba6b",
+            "fileHash": "5635d9aa3145a326",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-summer-fest/walls"
+        },
+        {
+            "configHash": "f95162059e7a3ad3",
+            "fileHash": "7f275576371e8310",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-summer-fest/objects"
+        },
+        {
+            "configHash": "63e90a8f0cc8368",
+            "fileHash": "44b546b69ffa4d5b",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-summer-fest/bigObjects"
+        },
+        {
+            "configHash": "13120ed9429d1458",
+            "fileHash": "a7e0deeeb39ca64e",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-trading/worldSprites"
+        },
+        {
+            "configHash": "ace408958e5d37bf",
+            "fileHash": "9d7339516be83238",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-trading/bigWorldSprites"
+        },
+        {
+            "configHash": "c4b3fc8c952d1d0b",
+            "fileHash": "87ef09735ba41d9f",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-trials-of-the-abyss/items"
+        },
+        {
+            "configHash": "3ac96dd96645ef75",
+            "fileHash": "d424519e1b68fa86",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-trials-of-the-abyss/bigObjects"
+        },
+        {
+            "configHash": "3e2968948d019dd",
+            "fileHash": "b5343753a0fbb5f7",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-trials-of-the-abyss/walls"
+        },
+        {
+            "configHash": "c89a7bf42a58583f",
+            "fileHash": "5fa0ef76ca201f85",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-trials-of-the-abyss/tilesExtended"
+        },
+        {
+            "configHash": "a82700e1e22baa3c",
+            "fileHash": "ea2ae718b6f70a39",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-valentines/mobs"
+        },
+        {
+            "configHash": "80810fa902dc6bfb",
+            "fileHash": "e4db0a958654a74c",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-valentines/items"
+        },
+        {
+            "configHash": "2bfec510a162f0ef",
+            "fileHash": "7f701614375764be",
+            "fileHashSince": 1742698952657,
+            "id": "iwd-valentines/bigMobs"
+        }
+    ]
+}
