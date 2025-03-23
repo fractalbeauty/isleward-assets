@@ -173,6 +173,11 @@ const makeManifest = async (
   );
 };
 
+const copyChangelog = async () => {
+  info("Copying changelog");
+  await fs.copyFile("./state/changelog.json", "./public/changelog.json");
+};
+
 const run = async (args: string[]): Promise<boolean> => {
   // parse options
   const options = parseArgs({
@@ -401,6 +406,9 @@ const run = async (args: string[]): Promise<boolean> => {
       encoding: "utf-8",
     }
   );
+
+  // copy chnagelog to public
+  await copyChangelog();
 
   info("Finished!");
 

@@ -27,3 +27,4 @@ pnpm-debug.log*
 public/assets
 public/sprites
 public/manifest.json
+public/changelog.json
