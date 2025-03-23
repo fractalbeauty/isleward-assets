@@ -22,6 +22,8 @@ export const spritesheetManifestSchema = spritesheetConfigSchema.extend({
   width: z.number(),
   height: z.number(),
   assetPath: z.string(),
+  fileHash: z.string(),
+  fileHashSince: z.number(),
 });
 export type SpritesheetManifest = z.infer<typeof spritesheetManifestSchema>;
 

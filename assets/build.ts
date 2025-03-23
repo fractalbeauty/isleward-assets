@@ -131,7 +131,10 @@ const copySprites = async (config: SpritesheetConfig) => {
   );
 };
 
-const makeManifest = async (configs: SpritesheetConfig[]) => {
+const makeManifest = async (
+  configs: SpritesheetConfig[],
+  lockfile: Lockfile
+) => {
   info("Generating manifest...");
 
   const spritesheets: SpritesheetManifest[] = [];
@@ -143,11 +146,18 @@ const makeManifest = async (configs: SpritesheetConfig[]) => {
     // but it was a pain to organize well
     const image = await Jimp.read(getSpritesheetPath(config));
 
+    const lock = lockfile.spritesheets.find((s) => s.id === config.id);
+    if (!lock) {
+      throw new Error("unexpected");
+    }
+
     spritesheets.push({
       ...config,
       width: image.width,
       height: image.height,
       assetPath,
+      fileHash: lock.fileHash,
+      fileHashSince: lock.fileHashSince,
     });
   }
 
@@ -314,8 +324,6 @@ const run = async (args: string[]): Promise<boolean> => {
     info("All spritesheets were skipped.");
   }
 
-  await makeManifest(SPRITESHEET_CONFIGS);
-
   // write lockfile
   info("Writing lockfile...");
   const updatedLockfile: Lockfile = {
@@ -381,6 +389,9 @@ const run = async (args: string[]): Promise<boolean> => {
   await fs.writeFile("./state/lockfile.json", prettyCanonicalUpdatedLockfile, {
     encoding: "utf-8",
   });
+
+  // write manifest using lockfile
+  await makeManifest(SPRITESHEET_CONFIGS, updatedLockfile);
 
   // write changelog
   await fs.writeFile(
