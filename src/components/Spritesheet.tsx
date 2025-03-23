@@ -93,6 +93,14 @@ export const Spritesheet: FunctionComponent<SpritesheetProps> = ({
             <li>Displayed at {scale}x resolution</li>
           </>
         )}
+        <li>
+          Last changed at{" "}
+          {new Date(manifest.fileHashSince)
+            .toISOString()
+            .split(".")[0]
+            .replace("T", " ")}{" "}
+          UTC
+        </li>
       </ul>
       <div className={styles.imageBorder}>
         <div
