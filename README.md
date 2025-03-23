@@ -15,8 +15,18 @@ Spritesheets from mods are prefixed as `<mod name>/<sheet name>`.
 Contributions are welcome.
 In particular, the spritesheet list in `assets/config.ts` needs to be
 kept up to date as new spritesheets are added or existing sheets are updated.
+When contributing changes to the config, the updated lockfile should not be
+comitted. It will be handled by CI.
 
 To run locally: Install nodejs, pnpm, and git; clone, `pnpm i`, `pnpm dev`.
+
+`build.ts` optionally accepts the flag `--changed` which will check each
+spritesheet's config and only download it if the config has changed since the
+previous run. The provided `dev:assets` script runs the script once without the
+flag to ensure all spritesheets are up to date, then watches for file changes
+and reruns the script with `--changed`. This is useful for editing the config,
+as each run after the initial run is much faster, but might be unhelpful when
+making general code changes.
 
 ## License
 Assets are from [Isleward](https://gitlab.com/isleward/isleward).

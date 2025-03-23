@@ -1,5 +1,7 @@
 import { z } from "astro/zod";
 
+// config
+
 export const spriteConfigSchema = z.object({
   name: z.string(),
   x: z.number(),
@@ -14,6 +16,8 @@ export const spritesheetConfigSchema = z.object({
 });
 export type SpritesheetConfig = z.infer<typeof spritesheetConfigSchema>;
 
+// manifest
+
 export const spritesheetManifestSchema = spritesheetConfigSchema.extend({
   width: z.number(),
   height: z.number(),
@@ -26,3 +30,22 @@ export const manifestSchema = z.object({
   spritesheets: z.array(spritesheetManifestSchema),
 });
 export type Manifest = z.infer<typeof manifestSchema>;
+
+// lockfile
+
+export const spritesheetLockSchema = z.object({
+  id: z.string(),
+  configHash: z.string(),
+  fileHash: z.string(),
+  fileHashSince: z.number(),
+});
+export type SpritesheetLock = z.infer<typeof spritesheetLockSchema>;
+
+export const lockfileSchema = z.object({
+  spritesheets: z.array(spritesheetLockSchema),
+});
+export type Lockfile = z.infer<typeof lockfileSchema>;
+
+export const DEFAULT_LOCKFILE: Lockfile = {
+  spritesheets: [],
+};

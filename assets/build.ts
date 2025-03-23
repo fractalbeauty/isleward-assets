@@ -1,11 +1,18 @@
+import { xxh64 } from "@node-rs/xxhash";
+import canonicalize from "canonicalize";
 import chalk from "chalk";
 import fs from "fs/promises";
 import { Jimp } from "jimp";
+import { exit } from "process";
+import { parseArgs } from "util";
 import { SPRITESHEET_CONFIGS } from "./config";
-import type {
-  Manifest,
-  SpritesheetConfig,
-  SpritesheetManifest,
+import {
+  DEFAULT_LOCKFILE,
+  lockfileSchema,
+  type Lockfile,
+  type Manifest,
+  type SpritesheetConfig,
+  type SpritesheetManifest,
 } from "./schema";
 
 const info = (...args: unknown[]) => {
@@ -48,8 +55,14 @@ const downloadSpritesheet = async (config: SpritesheetConfig) => {
     );
     throw new Error(`Download failed`);
   }
-  const bytes = await res.arrayBuffer();
-  await fs.writeFile(getSpritesheetPath(config), new Uint8Array(bytes));
+  const bytes = new Uint8Array(await res.arrayBuffer());
+  await fs.writeFile(getSpritesheetPath(config), bytes);
+
+  // hash file and return the hash
+  const hash = xxh64(bytes).toString(16);
+  return {
+    hash,
+  };
 };
 
 type JimpImage = Awaited<ReturnType<typeof Jimp.read>>;
@@ -147,24 +160,184 @@ const makeManifest = async (configs: SpritesheetConfig[]) => {
   );
 };
 
-const run = async () => {
-  info("Generating assets...");
+const run = async (args: string[]): Promise<boolean> => {
+  // parse options
+  const options = parseArgs({
+    args,
+    options: {
+      changed: {
+        type: "boolean",
+        default: false,
+      },
+    },
+  });
 
-  await fs.mkdir("./public/assets", { recursive: true });
-  await fs.mkdir("./public/sprites", { recursive: true });
+  // check if lockfile exists
+  info("Reading lockfile...");
+  let lockfileExists = false;
+  try {
+    await fs.access("./state/lockfile.json");
+    lockfileExists = true;
+  } catch (e) {
+    warn("Failed to access lockfile, creating it.");
+  }
 
-  for (const config of SPRITESHEET_CONFIGS) {
-    await downloadSpritesheet(config);
+  // read lockfile
+  let lockfile;
+  if (lockfileExists) {
+    // try to read contents
+    let lockfileContents;
+    try {
+      lockfileContents = await fs.readFile("./state/lockfile.json", {
+        encoding: "utf-8",
+      });
+    } catch (e) {
+      error("Failed to read existing lockfile.");
+      return false;
+    }
+
+    // try to parse contents
+    try {
+      lockfile = lockfileSchema.parse(JSON.parse(lockfileContents));
+    } catch (e) {
+      error("Failed to parse lockfile: ", e);
+      return false;
+    }
+  } else {
+    lockfile = DEFAULT_LOCKFILE;
   }
+
+  // hash configs
+  const configHashes = new Map<string, string>();
   for (const config of SPRITESHEET_CONFIGS) {
-    await splitSpritesheet(config);
+    // canonicalize according to RFC 8785 for stable hashing
+    const configString = canonicalize(config);
+    if (configString === undefined) {
+      throw new Error("unexpected");
+    }
+    // hash with xxhash 64, then convert to hex string
+    const configHash = xxh64(configString).toString(16);
+    configHashes.set(config.id, configHash);
   }
-  for (const config of SPRITESHEET_CONFIGS) {
-    await copySprites(config);
+
+  // info
+  if (options.values.changed) {
+    info("Skipping unchanged configs due to --changed.");
   }
+
+  // determine configs to process
+  const configsToProcess = SPRITESHEET_CONFIGS.filter((config) => {
+    // if --changed was passed
+    if (options.values.changed) {
+      // read the existing hash from the lockfile
+      const existingHash = lockfile.spritesheets.find(
+        (s) => s.id === config.id
+      )?.configHash;
+      if (typeof existingHash === "undefined") {
+        // spritesheet isn't in the lockfile, process it
+        return true;
+      }
+
+      // get the current config hash
+      const currentHash = configHashes.get(config.id);
+      if (typeof existingHash === "undefined") {
+        throw new Error("unexpected");
+      }
+
+      // check if hash is unchanged
+      if (existingHash === currentHash) {
+        return false;
+      }
+    }
+
+    return true;
+  });
+
+  const spritesheetHashes = new Map<string, string>();
+
+  if (configsToProcess.length > 0) {
+    info(`Updating ${configsToProcess.length} spritesheets...`);
+
+    await fs.mkdir("./public/assets", { recursive: true });
+    await fs.mkdir("./public/sprites", { recursive: true });
+
+    for (const config of configsToProcess) {
+      const res = await downloadSpritesheet(config);
+
+      // store hash of downloaded file
+      spritesheetHashes.set(config.id, res.hash);
+    }
+    for (const config of configsToProcess) {
+      await splitSpritesheet(config);
+    }
+    for (const config of configsToProcess) {
+      await copySprites(config);
+    }
+  } else {
+    info("All spritesheets were skipped.");
+  }
+
   await makeManifest(SPRITESHEET_CONFIGS);
 
-  info("Finished generating assets!");
+  // write lockfile
+  info("Writing lockfile...");
+  const updatedLockfile: Lockfile = {
+    spritesheets: SPRITESHEET_CONFIGS.map((spritesheet) => {
+      const configHash = configHashes.get(spritesheet.id);
+      if (typeof configHash === "undefined") {
+        throw new Error("unexpected");
+      }
+
+      // get previous values from lockfile
+      const prevLock = lockfile.spritesheets.find(
+        (s) => s.id === spritesheet.id
+      );
+
+      // get hash if it was processed
+      let fileHash = spritesheetHashes.get(spritesheet.id);
+      if (typeof fileHash === "undefined") {
+        // spritesheet should always be in lockfile or changed
+        if (typeof prevLock === "undefined") {
+          throw new Error("unexpected");
+        }
+
+        fileHash = prevLock.fileHash;
+      }
+
+      // check if file hash changed and update time
+      let fileHashSince = new Date().getTime();
+      if (prevLock && fileHash === prevLock.fileHash) {
+        fileHashSince = prevLock.fileHashSince;
+      }
+
+      return {
+        id: spritesheet.id,
+        configHash,
+        fileHash,
+        fileHashSince,
+      };
+    }),
+  };
+  // hack to canonicalize fields then pretty-print
+  const canonicalUpdatedLockfile = canonicalize(updatedLockfile) ?? "{}";
+  const prettyCanonicalUpdatedLockfile = JSON.stringify(
+    JSON.parse(canonicalUpdatedLockfile),
+    null,
+    4
+  );
+  await fs.writeFile("./state/lockfile.json", prettyCanonicalUpdatedLockfile, {
+    encoding: "utf-8",
+  });
+
+  info("Finished!");
+
+  return true;
 };
 
-run();
+run(process.argv.slice(2)).then((success) => {
+  if (success) {
+    exit(0);
+  } else {
+    exit(1);
+  }
+});
