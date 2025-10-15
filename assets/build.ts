@@ -5,15 +5,17 @@ import fs from "fs/promises";
 import { Jimp } from "jimp";
 import { exit } from "process";
 import { parseArgs } from "util";
-import { SPRITESHEET_CONFIGS } from "./config";
+import { BASE_URL, SPRITESHEET_CONFIGS } from "./config";
 import {
   changelogSchema,
   DEFAULT_LOCKFILE,
   lockfileSchema,
+  modImagesSchema,
   type Changelog,
   type ChangelogEntry,
   type Lockfile,
   type Manifest,
+  type ModImages,
   type SpritesheetConfig,
   type SpritesheetManifest,
 } from "./schema";
@@ -46,19 +48,75 @@ const getSpritesheetPartPath = (
 
 const getSpritePath = (name: string) => `./public/sprites/${name}.png`;
 
-const downloadSpritesheet = async (config: SpritesheetConfig) => {
-  info(`Downloading "${config.id}" from ${config.url}`);
+const getModImages = async (): Promise<ModImages> => {
+  // get index.js
+  const gameHtml = await fetch(BASE_URL).then((res) => res.text());
+  const indexJsUrl = gameHtml.match(/src="(\/assets\/index-[^"]+\.js)"/)?.[1];
+  if (!indexJsUrl) {
+    throw new Error("failed to find index.js url");
+  }
+  const indexJs = await fetch(BASE_URL + indexJsUrl).then((res) => res.text());
 
+  // extract mod images
+  const modImagesString = indexJs.match(/modImages=({[^}]+})/)?.[1];
+  if (!modImagesString) {
+    throw new Error("failed to find modImages");
+  }
+  let modImagesJson;
+  try {
+    modImagesJson = JSON.parse(modImagesString);
+  } catch (e) {
+    throw new Error("failed to parse modImages");
+  }
+  let modImages;
+  try {
+    modImages = modImagesSchema.parse(modImagesJson);
+  } catch (e) {
+    throw new Error("failed to validate modImages");
+  }
+
+  return modImages;
+};
+
+const downloadSpritesheet = async (
+  config: SpritesheetConfig,
+  modImages: ModImages
+) => {
   await fs.mkdir(getSpritesheetDirectory(config), { recursive: true });
 
-  const res = await fetch(config.url);
-  if (res.status !== 200) {
-    error(
-      `Download failed for "${config.id}" (${config.url}), status not ok: ${res.status}`
-    );
-    throw new Error(`Download failed`);
+  let url = new URL(config.url);
+
+  let bytes;
+  if (url.pathname.startsWith("/server/mods/")) {
+    // get from mod images
+    const modImagesKey = url.pathname.slice(1);
+    info(`Retrieving "${config.id}" from modImages "${modImagesKey}"`);
+
+    const base64 = modImages[modImagesKey];
+    if (!base64) {
+      throw new Error(`failed to find mod image for ${modImagesKey}`);
+    }
+
+    // decode base64
+    const buffer = Buffer.from(base64, "base64");
+
+    bytes = new Uint8Array(buffer);
+  } else {
+    // download from url
+    info(`Downloading "${config.id}" from ${config.url}`);
+
+    const res = await fetch(config.url);
+    if (res.status !== 200) {
+      error(
+        `Download failed for "${config.id}" (${config.url}), status not ok: ${res.status}`
+      );
+      throw new Error(`Download failed`);
+    }
+
+    bytes = new Uint8Array(await res.arrayBuffer());
   }
-  const bytes = new Uint8Array(await res.arrayBuffer());
+
+  // write file
   await fs.writeFile(getSpritesheetPath(config), bytes);
 
   // hash file and return the hash
@@ -187,8 +245,22 @@ const run = async (args: string[]): Promise<boolean> => {
         type: "boolean",
         default: false,
       },
+      "print-mod-images": {
+        type: "boolean",
+        default: false,
+      },
     },
   });
+
+  // if requested, print mod images and exit
+  if (options.values["print-mod-images"]) {
+    const modImages = await getModImages();
+    console.log("Mod images:");
+    for (const path of Object.keys(modImages)) {
+      console.log(path);
+    }
+    return true;
+  }
 
   // check if lockfile exists
   info("Reading lockfile...");
@@ -313,8 +385,10 @@ const run = async (args: string[]): Promise<boolean> => {
     await fs.mkdir("./public/assets", { recursive: true });
     await fs.mkdir("./public/sprites", { recursive: true });
 
+    const modImages = await getModImages();
+
     for (const config of configsToProcess) {
-      const res = await downloadSpritesheet(config);
+      const res = await downloadSpritesheet(config, modImages);
 
       // store hash of downloaded file
       spritesheetHashes.set(config.id, res.hash);

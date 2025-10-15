@@ -28,6 +28,8 @@ and reruns the script with `--changed`. This is useful for editing the config,
 as each run after the initial run is much faster, but might be unhelpful when
 making general code changes.
 
+As of April 2025, mod images are bundled into the JS by Vite using [this plugin](https://gitlab.com/Isleward/isleward/-/blob/master/src/client/vitePlugins/buildModImages.js). `build.ts` accepts the flag `--print-mod-images` to print the list of mod image paths.
+
 ## License
 Assets are from [Isleward](https://gitlab.com/isleward/isleward).
 Hosted assets might not be permissibly licensed.

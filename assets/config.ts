@@ -1,6 +1,6 @@
 import type { SpriteConfig, SpritesheetConfig } from "./schema";
 
-const BASE_URL = "https://play.isleward.com";
+export const BASE_URL = "https://play.isleward.com";
 
 const sheetStubCore = (name: string, size: number): SpritesheetConfig => ({
   id: name,

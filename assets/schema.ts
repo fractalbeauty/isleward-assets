@@ -64,3 +64,8 @@ export type ChangelogEntry = z.infer<typeof changelogEntrySchema>;
 
 export const changelogSchema = z.array(changelogEntrySchema);
 export type Changelog = z.infer<typeof changelogSchema>;
+
+// mod images
+
+export const modImagesSchema = z.record(z.string());
+export type ModImages = z.infer<typeof modImagesSchema>;
