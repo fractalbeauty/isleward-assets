@@ -39,11 +39,11 @@ const getSpritesheetPath = (config: SpritesheetConfig) =>
 const getSpritesheetPartPath = (
   config: SpritesheetConfig,
   x: number,
-  y: number
+  y: number,
 ) =>
   `./public/assets/${config.id}/${config.id.replaceAll(
     "/",
-    "_"
+    "_",
   )}_${x}_${y}.png`;
 
 const getSpritePath = (name: string) => `./public/sprites/${name}.png`;
@@ -58,13 +58,32 @@ const getModImages = async (): Promise<ModImages> => {
   const indexJs = await fetch(BASE_URL + indexJsUrl).then((res) => res.text());
 
   // extract mod images
+  // values may be variable references like `imageUrl_0` instead of inline strings
   const modImagesString = indexJs.match(/modImages=({[^}]+})/)?.[1];
   if (!modImagesString) {
     throw new Error("failed to find modImages");
   }
+
+  // replace variable references with their string values
+  const resolvedModImagesString = modImagesString.replace(
+    /:\s*([A-Za-z_$][A-Za-z0-9_$]*)/g,
+    (_match, varName) => {
+      // look for `varName="..."` or `varName='...'` anywhere in the file
+      const varMatch = indexJs.match(
+        new RegExp(
+          `(?:^|[\\s,;({])${varName}=("(?:[^"\\\\]|\\\\.)*"|'(?:[^'\\\\]|\\\\.)*')`,
+        ),
+      );
+      if (!varMatch) {
+        throw new Error(`failed to resolve variable "${varName}" in modImages`);
+      }
+      return `:${varMatch[1]}`;
+    },
+  );
+
   let modImagesJson;
   try {
-    modImagesJson = JSON.parse(modImagesString);
+    modImagesJson = JSON.parse(resolvedModImagesString);
   } catch (e) {
     throw new Error("failed to parse modImages");
   }
@@ -80,7 +99,7 @@ const getModImages = async (): Promise<ModImages> => {
 
 const downloadSpritesheet = async (
   config: SpritesheetConfig,
-  modImages: ModImages
+  modImages: ModImages,
 ) => {
   await fs.mkdir(getSpritesheetDirectory(config), { recursive: true });
 
@@ -92,9 +111,15 @@ const downloadSpritesheet = async (
     const modImagesKey = url.pathname.slice(1);
     info(`Retrieving "${config.id}" from modImages "${modImagesKey}"`);
 
-    const base64 = modImages[modImagesKey];
+    let base64 = modImages[modImagesKey];
     if (!base64) {
       throw new Error(`failed to find mod image for ${modImagesKey}`);
+    }
+
+    // strip data URL prefix if present (e.g. "data:image/png;base64,")
+    const dataUrlPrefix = base64.indexOf(",");
+    if (dataUrlPrefix !== -1) {
+      base64 = base64.slice(dataUrlPrefix + 1);
     }
 
     // decode base64
@@ -108,7 +133,7 @@ const downloadSpritesheet = async (
     const res = await fetch(config.url);
     if (res.status !== 200) {
       error(
-        `Download failed for "${config.id}" (${config.url}), status not ok: ${res.status}`
+        `Download failed for "${config.id}" (${config.url}), status not ok: ${res.status}`,
       );
       throw new Error(`Download failed`);
     }
@@ -132,7 +157,7 @@ const splitSpritesheetPart = async (
   sheet: SpritesheetConfig,
   sheetImage: JimpImage,
   x: number,
-  y: number
+  y: number,
 ) => {
   const offsetX = x * sheet.size;
   const offsetY = y * sheet.size;
@@ -155,12 +180,12 @@ const splitSpritesheet = async (config: SpritesheetConfig) => {
 
   if (image.width % config.size !== 0) {
     warn(
-      `Spritesheet ${config.id} with size ${config.size} has non-multiple width of ${image.width}`
+      `Spritesheet ${config.id} with size ${config.size} has non-multiple width of ${image.width}`,
     );
   }
   if (image.height % config.size !== 0) {
     warn(
-      `Spritesheet ${config.id} with size ${config.size} has non-multiple height of ${image.height}`
+      `Spritesheet ${config.id} with size ${config.size} has non-multiple height of ${image.height}`,
     );
   }
 
@@ -183,15 +208,15 @@ const copySprites = async (config: SpritesheetConfig) => {
     config.sprites.map(async (sprite) => {
       await fs.copyFile(
         getSpritesheetPartPath(config, sprite.x, sprite.y),
-        getSpritePath(sprite.name)
+        getSpritePath(sprite.name),
       );
-    })
+    }),
   );
 };
 
 const makeManifest = async (
   configs: SpritesheetConfig[],
-  lockfile: Lockfile
+  lockfile: Lockfile,
 ) => {
   info("Generating manifest...");
 
@@ -227,7 +252,7 @@ const makeManifest = async (
   await fs.writeFile(
     "./public/manifest.json",
     JSON.stringify(manifest, null, 4),
-    { encoding: "utf-8" }
+    { encoding: "utf-8" },
   );
 };
 
@@ -355,7 +380,7 @@ const run = async (args: string[]): Promise<boolean> => {
     if (options.values.changed) {
       // read the existing hash from the lockfile
       const existingHash = lockfile.spritesheets.find(
-        (s) => s.id === config.id
+        (s) => s.id === config.id,
       )?.configHash;
       if (typeof existingHash === "undefined") {
         // spritesheet isn't in the lockfile, process it
@@ -415,7 +440,7 @@ const run = async (args: string[]): Promise<boolean> => {
 
       // get previous values from lockfile
       const prevLock = lockfile.spritesheets.find(
-        (s) => s.id === spritesheet.id
+        (s) => s.id === spritesheet.id,
       );
 
       // get hash if it was processed
@@ -446,7 +471,7 @@ const run = async (args: string[]): Promise<boolean> => {
         info(
           `Spritesheet changed: ${changelogEntry.id}, ${
             changelogEntry.from ?? "(none)"
-          } -> ${changelogEntry.to}`
+          } -> ${changelogEntry.to}`,
         );
         changelog.push(changelogEntry);
       }
@@ -464,7 +489,7 @@ const run = async (args: string[]): Promise<boolean> => {
   const prettyCanonicalUpdatedLockfile = JSON.stringify(
     JSON.parse(canonicalUpdatedLockfile),
     null,
-    4
+    4,
   );
   await fs.writeFile("./state/lockfile.json", prettyCanonicalUpdatedLockfile, {
     encoding: "utf-8",
@@ -479,7 +504,7 @@ const run = async (args: string[]): Promise<boolean> => {
     JSON.stringify(changelog, null, 4),
     {
       encoding: "utf-8",
-    }
+    },
   );
 
   // copy chnagelog to public
