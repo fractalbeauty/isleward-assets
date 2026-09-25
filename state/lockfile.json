@@ -92,8 +92,8 @@
         },
         {
             "configHash": "fa7f516cba61870e",
-            "fileHash": "249f60aaf17a289c",
-            "fileHashSince": 1742698952656,
+            "fileHash": "a12bca69f1b59b86",
+            "fileHashSince": 1790305768412,
             "id": "mobs"
         },
         {
@@ -476,14 +476,14 @@
         },
         {
             "configHash": "c4b3fc8c952d1d0b",
-            "fileHash": "87ef09735ba41d9f",
-            "fileHashSince": 1742698952657,
+            "fileHash": "60b043fd7c96dd16",
+            "fileHashSince": 1790305768412,
             "id": "iwd-trials-of-the-abyss/items"
         },
         {
             "configHash": "3ac96dd96645ef75",
-            "fileHash": "7a06ba4dd49b3b8",
-            "fileHashSince": 1768263314684,
+            "fileHash": "48c1246192e7ebf3",
+            "fileHashSince": 1790305768412,
             "id": "iwd-trials-of-the-abyss/bigObjects"
         },
         {
